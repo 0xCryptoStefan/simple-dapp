@@ -5,19 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Simple dApp</title>
-    
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </head>
 <body>
     <h1>My Simple dApp</h1>
 
     <div id="mm-detected"></div>
 
+    <!-- If I put this into a div bracket, can I then remove the button and replace with address on connect? -->
     <button id="mm-connect">Connect to MetaMask</button>
 
     <div id="mm-current-account"></div>
 
     <input id="ss-input-box" type="number" placeholder="Provide input"/>
     <button id="ss-input-button">Submit Value</button>
+
+    <button id="ss-retrieve-button">Retrieve Value</button>
+    <div id="bc-stored-data"></div>
+    <!-- <div id="bc-stored-data-f2"></div> -->
+
 
     <script src="app.js"></script>
 </body>
