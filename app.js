@@ -1,3 +1,37 @@
+
+// Ganache instance of contract
+const contractAddress = "0x4C731975eAC37dc8EEEB2cFcFD3085d09F085a0f"
+
+// Ganache-deployed contract ABI
+const contractABI = [
+	{
+		"inputs": [],
+		"name": "retrieve",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num",
+				"type": "uint256"
+			}
+		],
+		"name": "store",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
+
 // Validate app is loading
 console.log("Page loaded as expected.")
 
@@ -30,6 +64,8 @@ window.addEventListener('load', function() {
 })
 
 var web3 = new Web3(window.ethereum)
+const simpleStorage = new web3.eth.Contract(contractABI, contractAddress) // added
+simpleStorage.setProvider(window.ethereum) // added
 
 const ssSubmit = document.getElementById('ss-input-button');
 
@@ -77,39 +113,6 @@ const ssRetrieve = document.getElementById('ss-retrieve-button');
 //     })
 
 
-// Ganache instance of contract
-const contractAddress = "0x4C731975eAC37dc8EEEB2cFcFD3085d09F085a0f"
-
-// Ganache-deployed contract ABI
-const contractABI = [
-	{
-		"inputs": [],
-		"name": "retrieve",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "num",
-				"type": "uint256"
-			}
-		],
-		"name": "store",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	}
-]
-
 // I don't know why the below works
 // Modified some code from: https://medium.com/coinmonks/a-really-simple-smart-contract-on-how-to-insert-value-into-the-ethereum-blockchain-and-display-it-62c455610e98
 ssRetrieve.onclick = // location.reload();
@@ -146,3 +149,16 @@ function getValue() {
     document.getElementById("bc-stored-data").innerHTML = err;
     }
     }
+
+
+const ssGetValue = document.getElementById('ss-get-value')
+
+ssGetValue.onclick = async () => {
+    console.log("Button has been clicked")
+    var value = await simpleStorage.methods.retrieve().call()
+    console.log("This is the stored value: " + value)
+
+    const ssDisplayValue = document.getElementById("ss-display-value")
+    ssDisplayValue.innerHTML = "Current Simple Storage Value: " + value
+    
+}
